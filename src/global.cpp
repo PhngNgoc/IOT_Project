@@ -14,3 +14,11 @@ String wifi_ssid = "abcde";
 String wifi_password = "123456789";
 boolean isWifiConnected = false;
 SemaphoreHandle_t xBinarySemaphoreInternet = xSemaphoreCreateBinary();
+
+SemaphoreHandle_t semTempNormal = xSemaphoreCreateBinary();;
+SemaphoreHandle_t semTempWarn = xSemaphoreCreateBinary();
+SemaphoreHandle_t semTempCrit = xSemaphoreCreateBinary();
+
+SemaphoreHandle_t semHumiLow = xSemaphoreCreateBinary();
+SemaphoreHandle_t semHumiNormal = xSemaphoreCreateBinary();
+SemaphoreHandle_t semHumiHigh = xSemaphoreCreateBinary();

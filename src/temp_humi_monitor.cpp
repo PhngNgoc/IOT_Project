@@ -13,30 +13,47 @@ void temp_humi_monitor(void *pvParameters){
         /* code */
         
         dht20.read();
+        SensorData data;
         // Reading temperature in Celsius
-        float temperature = dht20.getTemperature();
+        data.temperature = dht20.getTemperature();
         // Reading humidity
-        float humidity = dht20.getHumidity();
+        data.humidity = dht20.getHumidity();
 
         
 
         // Check if any reads failed and exit early
-        if (isnan(temperature) || isnan(humidity)) {
+        if (isnan(data.temperature) || isnan(data.humidity)) {
             Serial.println("Failed to read from DHT sensor!");
-            temperature = humidity =  -1;
+            data.temperature = data.humidity =  -1;
             //return;
+        }
+        if (data.temperature < 25.0) {
+            xSemaphoreGive(semTempNormal);
+        } else if (data.temperature <= 30.0) {
+            xSemaphoreGive(semTempWarn);
+        } else {
+            xSemaphoreGive(semTempCrit);
+        }
+
+                // Give semaphore for Humidity thresholds
+        if (data.humidity < 40.0) {
+            xSemaphoreGive(semHumiLow);
+        } else if (data.humidity <= 70.0) {
+            xSemaphoreGive(semHumiNormal);
+        } else {
+            xSemaphoreGive(semHumiHigh);
         }
 
         //Update global variables for temperature and humidity
-        glob_temperature = temperature;
-        glob_humidity = humidity;
+        glob_temperature = data.temperature;
+        glob_humidity = data.humidity;
 
         // Print the results
         
         Serial.print("Humidity: ");
-        Serial.print(humidity);
+        Serial.print(data.humidity);
         Serial.print("%  Temperature: ");
-        Serial.print(temperature);
+        Serial.print(data.temperature);
         Serial.println("°C");
         
         vTaskDelay(5000);
