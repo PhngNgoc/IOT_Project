@@ -85,6 +85,78 @@ body {
   margin: 0 auto;
 }
 
+.reading-fallback {
+  width          : 260px;
+  height         : 260px;
+  margin         : 0 auto;
+  display        : flex;
+  flex-direction : column;
+  justify-content: center;
+  align-items    : center;
+  border-radius  : 50%;
+  background     : radial-gradient(circle at center, #ffffff 0%, #eef6ff 68%, #dcecff 100%);
+  box-shadow     : inset 0 0 0 12px rgba(34, 148, 242, 0.12);
+}
+
+.reading-value {
+  font-size  : 42px;
+  font-weight: 700;
+  color      : #0f5fbf;
+  line-height: 1;
+}
+
+.reading-label {
+  margin-top    : 12px;
+  font-size     : 16px;
+  font-weight   : 600;
+  letter-spacing: 0.04em;
+  color         : #5f6b7a;
+  text-transform: uppercase;
+}
+
+.status-panel {
+  margin        : 30px auto 0;
+  max-width     : 720px;
+  background    : white;
+  border-radius : 16px;
+  box-shadow    : 0 6px 16px rgba(0, 0, 0, 0.08);
+  padding       : 24px 28px;
+}
+
+.status-row {
+  display        : flex;
+  justify-content: space-between;
+  align-items    : center;
+  gap            : 16px;
+  padding        : 14px 0;
+  border-bottom  : 1px solid #e7eef7;
+}
+
+.status-row:last-child {
+  border-bottom: none;
+}
+
+.status-label {
+  color      : #5f6b7a;
+  font-weight: 600;
+}
+
+.status-value,
+.status-link {
+  color      : #0f5fbf;
+  font-weight: 700;
+  text-align : right;
+}
+
+.status-link {
+  text-decoration: none;
+  word-break     : break-all;
+}
+
+.status-link:hover {
+  text-decoration: underline;
+}
+
 /* Device Page */
 .device-list {
   display        : flex;
@@ -171,18 +243,25 @@ body {
   display        : flex;
   justify-content: center;
   align-items    : flex-start;
-  padding-top    : 40px;
-  height         : 100%;
+  padding-top    : 24px;
+  min-height     : 100%;
+}
+
+.settings-grid {
+  width                : 100%;
+  display              : grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap                  : 24px;
+  align-items          : start;
 }
 
 .settings-card {
   background   : white;
-  padding      : 50px 60px;
-  border-radius: 20px;
+  padding      : 32px;
+  border-radius: 16px;
   box-shadow   : 0 10px 25px rgba(0, 0, 0, 0.15);
-  width        : 850px;
-  /* ✅ to hơn */
-  max-width    : 95%;
+  width        : auto;
+  max-width    : 100%;
   text-align   : center;
 }
 
@@ -197,23 +276,12 @@ body {
   font-size    : 15px;
 }
 
-/* FORM STYLE — vertical layout with spacing */
-#settingsForm {
-  width         : 100%;
-  display       : flex;
-  flex-direction: column;
-  align-items   : center;
-}
-
 /* mỗi input-group là 1 dòng, cách nhau */
 .input-group {
   position     : relative;
-  width        : 98%;
-  /* ✅ rộng gần hết khung */
+  width        : 100%;
   max-width    : 760px;
-  /* ✅ dài hơn hẳn */
   margin-bottom: 20px;
-  /* ✅ tạo khoảng cách giữa các dòng */
 }
 
 .input-group i {
@@ -255,6 +323,7 @@ body {
   cursor       : pointer;
   box-shadow   : 0 6px 18px rgba(34, 148, 242, 0.45);
   transition   : all 0.3s ease;
+  width        : 100%;
 }
 
 .btn-save:hover {
@@ -348,5 +417,43 @@ body {
   to {
     transform: scale(1);
     opacity  : 1;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    flex-direction: column;
+    height        : auto;
+  }
+
+  .sidebar {
+    width         : 100%;
+    flex-direction: row;
+    flex-wrap     : wrap;
+    justify-content: center;
+    padding-bottom: 12px;
+  }
+
+  .logo-container {
+    width: 100%;
+  }
+
+  .nav-item {
+    width          : auto;
+    justify-content: center;
+  }
+
+  .main-content {
+    padding: 24px 18px 40px;
+  }
+
+  .status-row {
+    flex-direction: column;
+    align-items   : flex-start;
+  }
+
+  .status-value,
+  .status-link {
+    text-align: left;
   }
 }

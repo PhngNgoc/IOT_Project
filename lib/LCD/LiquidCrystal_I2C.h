@@ -74,6 +74,7 @@ public:
 	 * Set the LCD display in the correct begin state, must be called before anything else is done.
 	 */
 	void begin();
+	void begin(uint8_t sda, uint8_t scl);
 
 	 /**
 	  * Remove all the characters currently shown. Next print/write operation will start
@@ -148,6 +149,7 @@ public:
 	void printstr(const char[]);
 
 private:
+	void initDisplay();
 	void send(uint8_t, uint8_t);
 	void write4bits(uint8_t);
 	void expanderWrite(uint8_t);

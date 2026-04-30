@@ -9,17 +9,49 @@ const int   mqttPort = 1883;
 WiFiClient espClient;
 PubSubClient client(espClient);
 
+namespace
+{
+  uint16_t mqttPortFromConfig()
+  {
+    const int configuredPort = CORE_IOT_PORT.toInt();
+    return configuredPort > 0 ? static_cast<uint16_t>(configuredPort) : mqttPort;
+  }
+
+  bool hasCoreIotConfig()
+  {
+    return !CORE_IOT_SERVER.isEmpty() && !CORE_IOT_TOKEN.isEmpty();
+  }
+}
 
 void reconnect() {
   // Loop until we're reconnected
   while (!client.connected()) {
-    Serial.print("Attempting MQTT connection...");
+    if (WiFi.status() != WL_CONNECTED)
+    {
+      Serial.println("MQTT waiting for Wi-Fi connection...");
+      delay(5000);
+      continue;
+    }
+
+    if (!hasCoreIotConfig())
+    {
+      Serial.println("MQTT config missing. Set Core IoT server, token, and port from the web page.");
+      delay(5000);
+      continue;
+    }
+
+    Serial.print("Attempting MQTT connection to ");
+    Serial.print(CORE_IOT_SERVER);
+    Serial.print(":");
+    Serial.print(mqttPortFromConfig());
+    Serial.print(" from ");
+    Serial.print(WiFi.localIP());
+    Serial.print("...");
     // Attempt to connect (username=token, password=empty)
-    //if (client.connect("ESP32Client", coreIOT_Token, NULL)) {
     String clientId = "ESP32Client-";
     clientId += String(random(0xffff), HEX);
 
-    if (client.connect(clientId.c_str())) {
+    if (client.connect(clientId.c_str(), CORE_IOT_TOKEN.c_str(), NULL)) {
         
       Serial.println("connected to CoreIOT Server!");
       client.subscribe("v1/devices/me/rpc/request/+");
@@ -101,7 +133,7 @@ void setup_coreiot(){
 
   Serial.println(" Connected!");
 
-  client.setServer(CORE_IOT_SERVER.c_str(), CORE_IOT_PORT.toInt());
+  client.setServer(CORE_IOT_SERVER.c_str(), mqttPortFromConfig());
   client.setCallback(callback);
 
 }

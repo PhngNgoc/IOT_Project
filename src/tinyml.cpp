@@ -18,7 +18,7 @@ void setupTinyML()
     static tflite::MicroErrorReporter micro_error_reporter;
     error_reporter = &micro_error_reporter;
 
-    model = tflite::GetModel(dht_anomaly_model_tflite); // g_model_data is from model_data.h
+    model = tflite::GetModel(dht_anomaly_model_tflite); 
     if (model->version() != TFLITE_SCHEMA_VERSION)
     {
         error_reporter->Report("Model provided is schema version %d, not equal to supported version %d.",

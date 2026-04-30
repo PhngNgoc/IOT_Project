@@ -38,24 +38,31 @@ void handleWebSocketMessage(String message)
     }
     else if (doc["page"] == "setting")
     {
-        String WIFI_SSID = doc["value"]["ssid"].as<String>();
-        String WIFI_PASS = doc["value"]["password"].as<String>();
-        String CORE_IOT_TOKEN = doc["value"]["token"].as<String>();
-        String CORE_IOT_SERVER = doc["value"]["server"].as<String>();
-        String CORE_IOT_PORT = doc["value"]["port"].as<String>();
+        String new_wifi_ssid = value["ssid"].as<String>();
+        String new_wifi_pass = value["password"].as<String>();
+        String new_core_iot_token = value["token"].as<String>();
+        String new_core_iot_server = value["server"].as<String>();
+        String new_core_iot_port = value["port"].as<String>();
 
         Serial.println("📥 Nhận cấu hình từ WebSocket:");
-        Serial.println("SSID: " + WIFI_SSID);
-        Serial.println("PASS: " + WIFI_PASS);
-        Serial.println("TOKEN: " + CORE_IOT_TOKEN);
-        Serial.println("SERVER: " + CORE_IOT_SERVER);
-        Serial.println("PORT: " + CORE_IOT_PORT);
+        Serial.println("SSID: " + new_wifi_ssid);
+        Serial.println("PASS: " + new_wifi_pass);
+        Serial.println("TOKEN: " + new_core_iot_token);
+        Serial.println("SERVER: " + new_core_iot_server);
+        Serial.println("PORT: " + new_core_iot_port);
 
         // 👉 Gọi hàm lưu cấu hình
-        Save_info_File(WIFI_SSID, WIFI_PASS, CORE_IOT_TOKEN, CORE_IOT_SERVER, CORE_IOT_PORT);
+        WIFI_SSID = new_wifi_ssid;
+        WIFI_PASS = new_wifi_pass;
+        CORE_IOT_TOKEN = new_core_iot_token;
+        CORE_IOT_SERVER = new_core_iot_server;
+        CORE_IOT_PORT = new_core_iot_port;
+
+        Save_info_File(WIFI_SSID, WIFI_PASS, CORE_IOT_TOKEN, CORE_IOT_SERVER, CORE_IOT_PORT, false);
+        Wifi_request_connect();
 
         // Phản hồi lại client (tùy chọn)
-        String msg = "{\"status\":\"ok\",\"page\":\"setting_saved\"}";
+        String msg = "{\"status\":\"connecting\",\"page\":\"setting_saved\"}";
         ws.textAll(msg);
     }
 }

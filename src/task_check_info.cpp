@@ -33,7 +33,7 @@ void Delete_info_File()
   ESP.restart();
 }
 
-void Save_info_File(String wifi_ssid, String wifi_pass, String CORE_IOT_TOKEN, String CORE_IOT_SERVER, String CORE_IOT_PORT)
+void Save_info_File(String wifi_ssid, String wifi_pass, String CORE_IOT_TOKEN, String CORE_IOT_SERVER, String CORE_IOT_PORT, bool restart_device)
 {
   Serial.println(wifi_ssid);
   Serial.println(wifi_pass);
@@ -53,9 +53,12 @@ void Save_info_File(String wifi_ssid, String wifi_pass, String CORE_IOT_TOKEN, S
   }
   else
   {
-    Serial.println('Unable to save the configuration.');
+    Serial.println("Unable to save the configuration.");
   }
-  ESP.restart();
+  if (restart_device)
+  {
+    ESP.restart();
+  }
 };
 
 bool check_info_File(bool check)
@@ -68,14 +71,11 @@ bool check_info_File(bool check)
       return false;
     }
     Load_info_File();
+    startAP();
   }
   
-  if (WIFI_SSID.isEmpty() && WIFI_PASS.isEmpty())
+  if (WIFI_SSID.isEmpty())
   {
-    if (!check)
-    {
-      startAP();
-    }
     return false;
   }
   return true;

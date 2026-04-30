@@ -1,6 +1,7 @@
-// #include "mainserver.h"
-// #include <WiFi.h>
 // #include <WebServer.h>
+// #include <WiFi.h>
+// #include "mainserver.h"
+
 
 // bool led1_state = false;
 // bool led2_state = false;
@@ -344,7 +345,7 @@
 
 // void connectToWiFi()
 // {
-//   WiFi.mode(WIFI_STA);
+//   WiFi.mode(WIFI_AP_STA);
 //   if (wifi_password.isEmpty())
 //   {
 //     WiFi.begin(wifi_ssid.c_str());
@@ -393,6 +394,8 @@
 //       {
 //         Serial.print("STA IP address: ");
 //         Serial.println(WiFi.localIP());
+//         Serial.print("AP IP address: ");
+//         Serial.println(WiFi.softAPIP());
 //         isWifiConnected = true; // Internet access
 
 //         xSemaphoreGive(xBinarySemaphoreInternet);
