@@ -1,0 +1,17 @@
+{
+  "name": "iot-webapp-server",
+  "version": "1.0.0",
+  "description": "Node bridge between ESP32 WebSocket and browser",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "ws": "^8.18.0"
+  }
+}
