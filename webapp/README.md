@@ -59,24 +59,8 @@ Vite tự proxy `/ws` và `/api` về backend ở cổng 3000.
 > Hot reload tự động: chỉnh code React, browser auto refresh.
 > Đổi backend code → tự Ctrl+C terminal 1 rồi chạy lại.
 
-### Cách 2 — Chạy không cần ESP32 (demo mode)
 
-Sinh dữ liệu nhiệt/ẩm giả mỗi 5s để xem UI hoạt động:
-
-```bash
-# Terminal 1
-cd /home/tai/vscodemain/IOT/IOT_Project/webapp/server
-echo "DEMO=1" >> .env         # bật demo mode (1 lần duy nhất)
-node server.js
-
-# Terminal 2
-cd /home/tai/vscodemain/IOT/IOT_Project/webapp/client
-npm run dev
-```
-
-Khi xong demo, mở `.env` xóa dòng `DEMO=1` để tắt.
-
-### Cách 3 — Production build (1 cổng duy nhất)
+### Cách 2 — Production build (1 cổng duy nhất)
 
 ```bash
 # Build frontend trước
