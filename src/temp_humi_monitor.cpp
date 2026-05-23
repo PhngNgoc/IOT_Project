@@ -15,7 +15,7 @@ void temp_humi_monitor(void *pvParameters){
     Serial.begin(115200);
     dht20.begin(I2C_SDA_PIN, I2C_SCL_PIN);
 
-    // --- THÊM PHẦN KHỞI TẠO LCD Ở ĐÂY ---
+    // --- THÊM PHẦN KHỞI TẠO LCD ---
     lcd.begin(I2C_SDA_PIN, I2C_SCL_PIN); // Khởi tạo màn hình
     lcd.backlight();  // Bật đèn nền
     lcd.setCursor(0, 0);
